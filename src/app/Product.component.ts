@@ -1,10 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {Product} from './Product';
+import { ProductService } from './Product.service';
+import { CartService } from './Cart.Service';
 
 @Component({
     selector: 'app-product',
     // templateUrl: 'fileName.component.html'
     template: `
+
+        <app-CartDetails></app-CartDetails>
 
         <!--Event Binding (we can pass data from view to model)-->
         <!--<input type="text" (blur)="doSearch($event.target.value)"/>-->
@@ -20,7 +24,7 @@ import {Product} from './Product';
           {{greet.message}}
           -->
 
-          <!-- nhIf: conditionally we can show/hide html element-->
+          <!-- ngIf: conditionally we can show/hide html element-->
         </div>
 
         <!--Pass data from model to view - Interpolation and property binding-->
@@ -46,10 +50,14 @@ import {Product} from './Product';
             <td [innerHTML]="product.category"></td>
             
             <!--Property binding to disable button for non-admin user-->
+            <!--
             <td><button class = "btn btn-primary" [disabled]="!IsAdmin">Delete</button></td>
 
             <td><button *ngIf="!IsAdmin" class = "btn btn-primary" (click)="showDetail()">Show/hide</button></td>
             <td><button *ngIf="!IsAdmin" class = "btn btn-primary" (click)="showDetails(i)">Show Details</button></td>
+            -->
+            <!--Using child component and pass product detail that is clicked-->
+            <td><app-addtocart [cartProduct]="product"></app-addtocart></td>
             </tr>
         </table>
     `,
@@ -77,7 +85,10 @@ import {Product} from './Product';
             padding: 5px
           }
             `
-    ]
+    ], 
+
+    //providers:[ProductService] //// register service where u want to use it
+    providers: [CartService] //register here to create a single common instance for addtocart and cartdetails
 })
 
 export class ProductComponent implements OnInit {
@@ -85,16 +96,10 @@ export class ProductComponent implements OnInit {
   IsAdmin:boolean = false;
   show:boolean = true;
     Products = [];
-    constructor() {
-        this.Products.push(new Product(1,"One Plus 5","./assets/images/1.jpg",1234,"mobile"))
-        this.Products.push(new Product(2, "Moto G5 Plus", "./assets/images/2.jpg", 13999, "Mobile"));
-        this.Products.push(new Product(3, "Nokia 6", "./assets/images/3.jpg", 14999, "Mobile"));
-        this.Products.push(new Product(4, "Samsung Galaxy Note 8", "./assets/images/4.jpg", 67900, "Mobile"));
-        this.Products.push(new Product(5, "Apple Iphone 8", "./assets/images/5.jpg", 64000, "Mobile"));
-        this.Products.push( new Product(6, "Dell Laptop", "./assets/images/6.jpg", 52000, "Laptop"));
-        this.Products.push( new Product(7, "Canon DSLR", "./assets/images/7.jpg", 65000,  "Camera"));
-        this.Products.push( new Product(8, "HP Printer", "./assets/images/8.jpg", 4000,  "Printer"));
-        this.Products.push(new Product(9, "Apple iPad", "./assets/images/9.jpg", 24900,"Tab"));
+    constructor(productservice: ProductService) {
+      //we can use service class to share data between components
+         //ProductService service=new ProductService
+       this.Products = productservice.GetProducts()
     }
 
     doSearch(criteria:string) {

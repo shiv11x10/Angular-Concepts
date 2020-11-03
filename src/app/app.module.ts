@@ -9,16 +9,27 @@ import { MenuComponent } from './menu.component';
 import { ProductComponent } from './Product.component';
 import { LoginComponent } from './Login.component';
 import { FormsModule } from '@angular/forms';
+import { AddToCartComponent } from './AddToCart.component';
+import { CartDetailsComponent } from './CartDetails.component';
+import { CartService } from './Cart.Service';
+import { CounterComponent } from './Counter.component';
+import { ParentComponent } from './Parent.component';
+import { TestComponent } from './Test.component';
 
 //@NgModule: Module type class
 @NgModule({
   declarations: [
-    AppComponent,
+    AppComponent,   //All components need to be registered in AppModule
     GreetComponent,
     HelloWorldComponent,
     MenuComponent,
     ProductComponent,
-    LoginComponent     //All components need to be registered in AppModule
+    LoginComponent,
+    AddToCartComponent,
+    CartDetailsComponent,
+    CounterComponent,
+    ParentComponent,
+    TestComponent    
   ],
   imports: [
     BrowserModule,
