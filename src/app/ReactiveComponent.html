@@ -1,0 +1,28 @@
+<form [formGroup]="signupform" (ngSubmit)=postForm()>
+
+    <div class="form-group">
+       <label>Enter Name</label><br/>
+       <input type="text" class="form-control" formControlName="name"/>
+    
+       <p *ngIf="signupform.get('name').hasError('required') ">Name is required...</p>
+        
+    </div>
+    <div class="form-group">
+       <label>Enter Address</label><br/>
+       <input type="text" class="form-control" formControlName="address"/>
+    </div>
+
+    <div class="form-group">
+        <label>Enter Telephone</label><br/>
+        <input type="text" class="form-control" formControlName="tel"/>
+     </div>
+
+<div class="form-group">
+       <label>Enter email</label><br/>
+       <input type="text" class="form-control"/>
+    </div>
+    
+  
+
+    <button class="btn btn-primary"  [disabled]="signupform.invalid">Submit</button>
+</form>

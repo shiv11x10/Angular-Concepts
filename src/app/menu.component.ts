@@ -11,7 +11,10 @@ import { Component, OnInit } from '@angular/core';
         </div>
         <ul class="nav navbar-nav">
         <li *ngFor="let item of menus">
-            <a href="#">{{item}}</a>
+            <!--<a href="#">{{item}}</a>-->
+
+            <!--ROuterLink: add and map links to routes -->
+            <a routerLink="{{item | lowercase}}">{{item}}</a>
         </li>
         </ul>
     </nav>
@@ -22,7 +25,7 @@ export class MenuComponent implements OnInit {
 
     menus = []
     constructor() {
-        this.menus = ["Home", 'About us', 'Products'];
+        this.menus = ["Home", 'Cart Details', 'Products', 'Login', 'Registration', 'Reactive Form', 'Photos', 'Pipe', 'Payment'];
      }
 
     ngOnInit() { 

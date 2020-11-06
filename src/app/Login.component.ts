@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { LoginService } from './Login.service';
 
 @Component({
     selector: 'app-login',
     template: `
+        <app-header></app-header>
+
         <h2>Login</h2>
 
         <!-- Two way data flow with function call 
@@ -15,24 +18,24 @@ import { Component, OnInit } from '@angular/core';
         User Name  :<input type="text" [(ngModel)]="username"/><br>
         Password : <input type="text" [(ngModel)]="password" #pass/><br> 
 
+        <button (click)="change()">Login</button>
 
-        <h2>Model(Source) Values</h2>
+        <!--<h2>Model(Source) Values</h2>
         <h2>{{username}}</h2>
-        <h2>{{password}}</h2>
+        <h2>{{password}}</h2>-->
      `
 })
 export class LoginComponent implements OnInit {
 
     username:string;
     password:string;
-    constructor() { 
+    constructor(private loginservice: LoginService) { 
         this.username = "admin";
         this.password = "admin";
     }
 
-    change(user:string, pass:string) {
-        this.username = user;
-        this.password = pass;
+    change() {
+       this.loginservice.setUserName(this.username);
     }
 
     ngOnInit() { 

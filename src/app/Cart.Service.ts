@@ -12,7 +12,7 @@ export class CartService {
      }
 
     addToCart(product:Product) {
-        this.cartProducts.push(product);
+        this.cartProducts.push(product);  //here, due to push() the cartProduct is just modified and not changed so we do not have to use observables for subcribing to changes
         console.log(this.cartProducts);
     }
 

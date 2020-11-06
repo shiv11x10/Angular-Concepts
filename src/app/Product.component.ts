@@ -2,13 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import {Product} from './Product';
 import { ProductService } from './Product.service';
 import { CartService } from './Cart.Service';
+import { Router } from '@angular/router';
 
 @Component({
     selector: 'app-product',
     // templateUrl: 'fileName.component.html'
     template: `
+    
+        <!--Dynamic routing-->
+        <button (click)="route()">Dynamic routing</button>
 
-        <app-CartDetails></app-CartDetails>
+        <!--This is used to output product details with router-->
+        <router-outlet></router-outlet> 
+
+        <!--<app-CartDetails></app-CartDetails>-->
 
         <!--Event Binding (we can pass data from view to model)-->
         <!--<input type="text" (blur)="doSearch($event.target.value)"/>-->
@@ -38,8 +45,14 @@ import { CartService } from './Cart.Service';
             
             </tr>
             <tr *ngFor="let product of Products; let i = index"> <!--we can pass index also with i = index-->
+
             <td>{{product.id}}</td>
-            <td *ngIf="show">{{product.name}}</td>
+            <!--<td *ngIf="show">{{product.name}}</td>-->
+
+            <!--using router children as hyperlink for name -->
+            <!--<td> <a routerLink="productdetails/{{product.id}}" > {{product.name}} </a></td>--><!--With interpolation-->
+
+            <td> <a [routerLink]=" ['productdetails', product.id] " > {{product.name}} </a></td>
 
             <!--Interpolation(we can do concatenation also)-->
             <!-- <td> <img  src="D:\\Courses\\{{product.prodImg}}"/></td>-->
@@ -56,6 +69,7 @@ import { CartService } from './Cart.Service';
             <td><button *ngIf="!IsAdmin" class = "btn btn-primary" (click)="showDetail()">Show/hide</button></td>
             <td><button *ngIf="!IsAdmin" class = "btn btn-primary" (click)="showDetails(i)">Show Details</button></td>
             -->
+            
             <!--Using child component and pass product detail that is clicked-->
             <td><app-addtocart [cartProduct]="product"></app-addtocart></td>
             </tr>
@@ -88,7 +102,7 @@ import { CartService } from './Cart.Service';
     ], 
 
     //providers:[ProductService] //// register service where u want to use it
-    providers: [CartService] //register here to create a single common instance for addtocart and cartdetails
+    //providers: [CartService] //register here to create a single common instance for addtocart and cartdetails
 })
 
 export class ProductComponent implements OnInit {
@@ -96,7 +110,7 @@ export class ProductComponent implements OnInit {
   IsAdmin:boolean = false;
   show:boolean = true;
     Products = [];
-    constructor(productservice: ProductService) {
+    constructor(productservice: ProductService, private router:Router) {
       //we can use service class to share data between components
          //ProductService service=new ProductService
        this.Products = productservice.GetProducts()
@@ -121,6 +135,12 @@ export class ProductComponent implements OnInit {
     showDetails(i) {
       alert(this.Products[i].name + " "+ this.Products[i].price)
     }
+
+    route() {
+      //dynamic routing
+      this.router.navigate(['login']);
+    }
+
     ngOnInit() { 
 
     }

@@ -1,0 +1,36 @@
+<form (ngSubmit)="postForm()" #signupform="ngForm">
+
+    <div class="form-group">
+       <label>Enter Name</label><br/>
+       <input type="text" class="form-control"    
+        #username="ngModel"
+       [(ngModel)]="user.name" name="name" required minlength='5'/>
+    
+    <!-- <small *ngIf="username.invalid">Name is mandatory</small> -->
+
+    <small *ngIf="username.errors?.required">Name is mandatory</small>
+    <small *ngIf="username.errors?.minlength">Min length should be 5</small>
+
+    </div>
+    <div class="form-group">
+       <label>Enter Address</label><br/>
+       <input type="text" class="form-control" [(ngModel)]="user.address" name="address"/>
+    </div>
+
+<div class="form-group">
+       <label>Enter email</label><br/>
+       <input type="text" class="form-control" [(ngModel)]="user.email" 
+       name="email"
+       #uemail="ngModel"
+       [email]=true 
+       required/>
+
+       <small *ngIf="uemail.errors?.required">Email is mandatory</small>
+    </div>
+    <div class="form-group">
+       <label>Enter PinCode</label><br/>
+       <input type="text" class="form-control" [(ngModel)]="user.pincode" name="pincode"/>
+    </div>
+
+    <button class="btn btn-primary" [disabled]="signupform.invalid">Submit</button>
+</form>
